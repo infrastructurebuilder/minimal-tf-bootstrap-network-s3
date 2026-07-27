@@ -21,6 +21,11 @@ variable "state_bucket_name" {
   type        = string
 }
 
+variable "alb_logs_bucket_name" {
+  description = "Name of the S3 bucket for ALB access logs (must be globally unique, or leave null to auto-generate from name_prefix)"
+  type        = string
+}
+
 variable "environment" {
   description = "Environment name (e.g., 'production', 'staging')"
   type        = string

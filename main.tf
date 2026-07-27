@@ -86,7 +86,7 @@ resource "aws_route_table_association" "public_rta" {
 # ==============================================================================
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "${var.name_prefix}-state"
+  bucket = "${var.state_bucket_name}"
 
   # Prevent accidental deletion of this S3 bucket
   lifecycle {
@@ -94,7 +94,7 @@ resource "aws_s3_bucket" "terraform_state" {
   }
 
   tags = {
-    Name = "${var.name_prefix}-state"
+    Name = "${var.state_bucket_name}"
   }
 }
 
@@ -109,10 +109,10 @@ resource "aws_s3_bucket_public_access_block" "terraform_state" {
 }
 
 resource "aws_s3_bucket" "alb_logs" {
-  bucket = "${var.name_prefix}-alb-logs"
+  bucket = "${var.alb_logs_bucket_name}"
   force_destroy = true
   tags = {
-    Name = "${var.name_prefix}-alb-logs"
+    Name = "${var.alb_logs_bucket_name}"
   }
 }
 
