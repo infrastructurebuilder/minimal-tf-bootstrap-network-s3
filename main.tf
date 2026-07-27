@@ -14,38 +14,35 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "${var.environment}-vpc-${var.external_random_id}"
+    Name = "${var.name_prefix}-vpc"
   }
 }
 
 
-# ==============================================================================
 # SUBNETS
-# ==============================================================================
-
 # Create 2 Public Subnets in different AZs
 resource "aws_subnet" "public" {
-  count                   = 2
+  count                   = var.subnet_count
   vpc_id                  = aws_vpc.main.id
   cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)
   availability_zone       = local.sorted_azs[count.index]
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "pbt-nexus-public-subnet-${count.index + 1}"
+    Name = "${var.name_prefix}-public-${count.index + 1}"
     Tier = "Public"
   }
 }
 
 # Create 2 Private Subnets in different AZs
 resource "aws_subnet" "private" {
-  count             = 2
+  count             = var.subnet_count
   vpc_id            = aws_vpc.main.id
   cidr_block        = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index + 2)
   availability_zone = local.sorted_azs[count.index]
 
   tags = {
-    Name = "pbt-nexus-private-subnet-${count.index + 1}"
+    Name = "${var.name_prefix}-private-${count.index + 1}"
     Tier = "Private"
   }
 }
@@ -59,7 +56,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "pbt-nexus-igw"
+    Name = "${var.name_prefix}-igw"
   }
 }
 
@@ -73,7 +70,7 @@ resource "aws_route_table" "public_rt" {
   }
 
   tags = {
-    Name = "pbt-nexus-public-route-table"
+    Name = "${var.name_prefix}-public-route-table"
   }
 }
 

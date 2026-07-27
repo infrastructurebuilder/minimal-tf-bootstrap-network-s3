@@ -1,9 +1,5 @@
 data "aws_caller_identity" "current" {}
 
-# ==============================================================================
-# IAM POLICIES FOR TERRAFORM STATE S3 BUCKET
-# ==============================================================================
-
 # Admin policy: full read-write access, scoped to state/* keys only
 resource "aws_iam_policy" "terraform_state_admin" {
   name        = "${var.state_bucket_name}-admin"

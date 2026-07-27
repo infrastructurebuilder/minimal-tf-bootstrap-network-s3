@@ -47,12 +47,13 @@ variable "vpc_cidr_block" {
   type        = string
 }
 
-variable "root_dir" {
-  description = "The root directory of the project (location of top-level Justfile)"
-  type        = string
-}
-
 variable "external_random_id" {
   description = "EXTERNALLY-GENERATED Random ID to ensure uniqueness"
   type        = string
+}
+
+variable "subnet_count" {
+  description = "Number of public and private subnets to create"
+  type        = number
+  default     = 2
 }
