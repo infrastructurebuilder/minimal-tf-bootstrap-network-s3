@@ -1,0 +1,13 @@
+.*
+_ignored
+
+# This file is tracked, so every clone gets the same rules.
+!.gitignore
+
+# Spec Kit: share the scaffolding and the agent skills.
+# .specify/.gitignore keeps Spec Kit's machine-local state out.
+!/.specify
+!/.specify/**
+!/.claude
+/.claude/*
+!/.claude/skills
